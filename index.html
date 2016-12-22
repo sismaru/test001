@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>  <html dir="ltr" lang="ko-KR" class="no-js ie ie6 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 7]>     <html dir="ltr" lang="ko-KR" class="no-js ie ie7 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 8]>     <html dir="ltr" lang="ko-KR" class="no-js ie ie8 lte9 lte8"> <![endif]-->
+<!--[if IE 9]>     <html dir="ltr" lang="ko-KR" class="no-js ie ie9 lte9"> <![endif]-->
+<!--[if gt IE 9]>  <html dir="ltr" lang="ko-KR" class="no-js">  <![endif]-->
+<!--[if !IE]><!--> <html dir="ltr" lang="ko-KR"> <!--<![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text./html; charset=utf-8">
+	<title>작업페이지 목록</title>
+	<style type="text/css">
+	body{background:none;padding:0;margin:20px;min-width:900px;}
+	* {font-family:"나눔고딕","NanumGothic",sans-serif !important;font-size:12px;}
+	h1{font-size:180% !important;margin-bottom:10px;}
+	table{width:100%;table-layout:fixed;border-left:1px solid #ccc;border-top:1px solid #ccc;}
+	table thead th, table tfoot th{text-align:center;background:#e9e9e9;}
+	table thead th, table tfoot th,table tbody td{border-right:1px solid #ccc;border-bottom:1px solid #ccc;padding:7px;}
+	table tbody td{padding:8px 5px;/* white-space: nowrap; */  }
+	table tbody td.align_center{text-align:center;}
+	table tbody tr:hover td{background:#f7f7f7;}
+	tr.done td, tr.done td a{background:#6396EC !important;color:#fff !important;}
+	tr.delete td, tr.delete:hover td{background:red; text-decoration:line-through;}
+	td.colspan{background:#f7f7f7;}
+	p.modify{text-decoration:underline;}
+	div.common_modify{border:1px solid #e2e2e2;background:#fff;padding:10px;margin-bottom:10px;font-size:14px;background:#6396EC !important;color:#fff !important;}
+	.tab_nav{margin:0 0 0;border-bottom:1px solid #ddd;position:relative;}
+	.tab_nav ul{display:inline-block;margin:0;padding:0;}
+	.tab_nav ul li{display: inline-block;}
+	.ie7 .tab_nav ul, .lte7 .tab_nav ul li{display:inline;zoom:1;}
+	.tab_nav ul li a{display: inline-block;margin-bottom: -1px; padding: 8px 12px; border: 1px solid transparent; border-bottom: 0; font-size: 14px; color: #666; text-decoration: none;}
+	.tab_nav ul li.current a{border-color: #ddd;border-radius: 3px 3px 0 0; background-color: white; color: #333; font-weight: bold;}
+	.tab_nav .tab_nav_last{position:absolute;top:0;right:0;}
+	.tab_nav .count{position: relative; top: -1px; margin: 0 0 0 5px; padding: 1px 5px 2px 5px; font-size: 10px; font-weight: bold; color: #666; background: #e5e5e5; border-radius: 10px; font:11px verdana, sans-serif; line-height:1.25;}
+	.ie6 .tab_nav ul{}
+	.ie6 .tab_nav ul li{float:left;}
+	.ie6 .tab_nav .tab_nav_last ul{float:right;}
+	.tab_contents_wrap{background:#fff;border:1px solid #ddd;border-top:none;padding:10px;}
+	.hide{display:none;}
+	.source_download{margin:10px 0;list-style-type:disc;margin-left:10px;padding-left:10px;}
+	.ie7 table td{padding-left:0 !important;padding-right:0 !important;}
+
+	.add td{background:#fff799;}
+	</style>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var lnk = "";
+		$("thead tr th:first-child, tfoot tr th:first-child").before("<th>번호</th>");
+		$(".tab_contents_wrap").each(function(){
+			$("tbody tr", $(this)).each(function(index){
+				$("td:first-child", $(this)).before("<td>"+ (index+1) +"</td>");
+				lnk = $("td:last a", $(this)).text();
+
+				/*if($(this).parent().parent().parent().attr("id") == "tab_1_contents"){
+					$("td:last a", $(this)).attr({"href" : "."+lnk, "target":"blank"});
+				}*/
+			});
+		});
+		$(".tab_contents_wrap").addClass("hide");
+		$(".tab_contents_wrap").eq(0).removeClass("hide");
+		$(".tab_nav li").click(function(e){
+			e.preventDefault();
+			var idx = $(this).index(".tab_nav li");
+			$(".tab_nav li").removeClass("current").eq(idx).addClass("current");
+			$(".tab_contents_wrap").addClass("hide");
+			$(".tab_contents_wrap").eq(idx).removeClass("hide");
+		});
+		//$("#done_count").html($("#tab_1_contents table tr.done").length + '/' + $("#tab_1_contents table tbody tr").length);
+		$("#done_count").html($("#tab_1_contents table tbody tr").length);
+	});
+	</script>
+</head>
+<body>
+
+	<h1>작업페이지 목록</h1>
+
+	<div class="tab_nav">
+		<ul>
+			<li class="current"><a href="#tab_1_contents"><span>투어프론트</span><span id="done_count" class="count"></span></a></li>
+			<!-- <li><a href="#tab_2_contents"><span>UI KIT</span><span class="count">11</span></a></li> -->
+		</ul>
+	</div>
+
+	<div id="tab_1_contents" class="tab_contents_wrap">
+		<table cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="70">
+				<col width="200">
+				<col width="200">
+				<col width="200">
+				<col width="200">
+				<col width="*">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>1Depth</th>
+					<th>2Depth</th>
+					<th>3Depth</th>
+					<th>4Depth</th>
+					<th>경로</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>1Depth</th>
+					<th>2Depth</th>
+					<th>3Depth</th>
+					<th>4Depth</th>
+					<th>경로</th>
+				</tr>
+			</tfoot>
+			<tbody>
+				<tr>
+					<td>기본 템플릿</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/template.html">./html/template.html</a></td>
+				</tr>
+				<tr>
+					<td>메인페이지</td>
+					<td></td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/main.html">./html/main.html</a></td>
+				</tr>
+				<tr>
+					<td>서브 메인페이지</td>
+					<td></td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/sub_main.html">./html/sub_main.html</a></td>
+				</tr>
+				<tr>
+					<td rowspan="3">딜상세</td>
+					<td>딜상세 - 지역</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/deal_view.html">./html/deal_view.html</a></td>
+				</tr>
+				<tr>
+					<td rowspan="2">딜상세 - 숙박</td>
+					<td>딜상세 - 숙박</td>
+					<td>-</td>
+					<td><a href="./html/deal_view_accom.html">./html/deal_view_accom.html</a></td>
+				</tr>
+				<tr>
+					<td>딜상세 - 숙박 팝업</td>
+					<td>-</td>
+					<td><a href="./html/accom_pop01.html">./html/accom_pop01</a></td>
+				</tr>
+				<tr>
+					<td rowspan="6">마이페이지</td>
+					<td rowspan="3">구매목록</td>
+					<td>구매목록</td>
+					<td>-</td>
+					<td><a href="./html/mypage_01.html">./html/mypage_01.html</a></td>
+				</tr>
+				<tr>
+					<td>주문취소팝업</td>
+					<td>-</td>
+					<td><a href="./html/mypage_popup01.html">./html/mypage_popup01.html</a></td>
+				</tr>
+				<tr>
+					<td>티켓 프린트</td>
+					<td>-</td>
+					<td><a href="./html/mypage_popup02.html">./html/mypage_popup02.html</a></td>
+				</tr>
+				<tr>
+					<td>구매상세</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/mypage_02.html">./html/mypage_02.html</a></td>
+				</tr>
+				<tr>
+					<td>찜목록</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/mypage_03.html">./html/mypage_03.html</a></td>
+				</tr>
+				<tr>
+					<td>취소/교환/반품현황</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="./html/mypage_04.html">./html/mypage_04.html</a></td>
+				</tr>
+				<tr>
+					<td rowspan="5">구매하기</td>
+					<td rowspan="2">장바구니</td>
+					<td>장바구니</td>
+					<td>-</td>
+					<td><a href="./html/order_cart.html">./html/order_cart.html</a></td>
+				</tr>
+				<tr>
+					<td>팝업 - 옵션 변경</td>
+					<td>-</td>
+					<td><a href="./html/order_popup02.html">./html/order_popup02.html</a></td>
+				</tr>
+				<tr>
+					<td rowspan="2">주문/결제</td>
+					<td>주문/결제</td>
+					<td>-</td>
+					<td><a href="./html/order_order.html">./html/order_order.html</a></td>
+				</tr>
+				<tr>
+					<td>팝업 - 쿠폰 사용</td>
+					<td>-</td>
+					<td><a href="./html/order_popup01.html">./html/order_popup01.html</a></td>
+				</tr>
+				<tr>
+					<td>주문완료1</td>
+					<td>-</td>
+					<td>-</td>
+					<td><a href="#">#</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
